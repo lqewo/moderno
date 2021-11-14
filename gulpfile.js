@@ -6,7 +6,8 @@ const uglify        = require('gulp-uglify-es').default;
 const postcss       = require('gulp-postcss');
 const autoprefixer  = require('autoprefixer');
 const imagemin      = require('gulp-imagemin');
-const del           = require('del')
+const del           = require('del');
+
 
 function browsersync() {
     browserSync.init({
@@ -39,7 +40,10 @@ function images() {
 function scripts () {
     return src([
     'node_modules/jquery/dist/jquery.js',
-    'app/js/main.js'
+    'node_modules/mixitup/dist/mixitup.js',
+    'node_modules/rateyo/jquery.rateyo.js',
+    'node_modules/slick-carousel/slick/slick.js',
+    'app/js/main.js',
     ])
     .pipe(concat('main.min.js'))
     .pipe(uglify())
@@ -48,7 +52,12 @@ function scripts () {
 }
 
 function styles() {
-    return src('app/scss/style.scss')
+    return src([
+        'node_modules/normalize.css/normalize.css',
+        'node_modules/rateyo/jquery.rateyo.css',
+        'node_modules/slick-carousel/slick/slick.css',
+        'app/scss/style.scss'
+    ])
         .pipe(scss({outputStyle: 'compressed'}))
         .pipe(concat('style.min.css'))
         .pipe(postcss([ autoprefixer({
